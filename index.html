@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renata & Roany - Nuestra Boda</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wedding: {
+                            olive: '#5C6752',
+                            sage: '#8A9A86',
+                            softSage: '#C5D0C0',
+                            terracotta: '#B2837A',
+                            dustyRose: '#D8A79D',
+                            softRose: '#F2D6D0',
+                            cream: '#FDFBF7',
+                            sand: '#F4EFEA',
+                            charcoal: '#2D342D',
+                            gold: '#C6A15B'
+                        }
+                    },
+                    fontFamily: {
+                        script: ['Great Vibes', 'cursive'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .font-script { font-family: 'Great Vibes', cursive; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .font-sans { font-family: 'Montserrat', sans-serif; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .glass-card {
+            background: rgba(253, 251, 247, 0.88);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 154, 134, 0.2);
+        }
+
+        .glass-dark {
+            background: rgba(45, 52, 45, 0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4EFEA;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8A9A86;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5C6752;
+        }
+    </style>
+</head>
+<body class="bg-wedding-cream text-wedding-charcoal font-sans antialiased selection:bg-wedding-softRose selection:text-wedding-charcoal">
+
+    <!-- Music Player Toggle Floating Button -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="bgAudioBtn" onclick="toggleAudio()" class="glass-card shadow-lg hover:shadow-xl transition-all duration-300 px-4 py-2.5 rounded-full flex items-center gap-2.5 text-wedding-olive border border-wedding-sage/30 hover:scale-105 active:scale-95 group">
+            <i id="audioIcon" class="fas fa-music text-wedding-terracotta group-hover:rotate-12 transition-transform"></i>
+            <span id="audioStatusText" class="text-xs font-semibold tracking-wider uppercase pr-1">Música</span>
+        </button>
+    </div>
+
+    <!-- Hidden audio element with fallback romantic melody -->
+    <audio id="weddingAudio" loop preload="none">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-113543.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Toast Notification Container -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-500 max-w-sm glass-dark text-white p-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-wedding-gold/40">
+        <div class="w-9 h-9 rounded-full bg-wedding-gold/20 flex items-center justify-center shrink-0">
+            <i id="toastIcon" class="fas fa-check text-wedding-gold"></i>
+        </div>
+        <div>
+            <p id="toastTitle" class="text-xs font-bold uppercase tracking-wider text-wedding-softRose">Notificación</p>
+            <p id="toastMessage" class="text-xs text-stone-200">Mensaje copiado al portapapeles</p>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 glass-card border-b border-wedding-sage/20 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#" class="font-script text-2xl md:text-3xl text-wedding-terracotta hover:opacity-80 transition-opacity">
+                Renata & Roany
+            </a>
+            <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold uppercase tracking-wider text-wedding-charcoal/80">
+                <a href="#recuerdos" class="hover:text-wedding-terracotta transition-colors">Recuerdos</a>
+                <a href="#detalles" class="hover:text-wedding-terracotta transition-colors">Detalles</a>
+                <a href="#vestimenta" class="hover:text-wedding-terracotta transition-colors">Vestimenta</a>
+                <a href="#regalos" class="hover:text-wedding-terracotta transition-colors">Mesa de Regalos</a>
+                <a href="#musica" class="hover:text-wedding-terracotta transition-colors">Música</a>
+                <a href="#rsvp" class="hover:text-wedding-terracotta transition-colors">RSVP</a>
+            </nav>
+            <a href="#rsvp" class="bg-wedding-olive hover:bg-wedding-olive/90 text-white text-xs font-medium px-4 py-2 rounded-full shadow-md transition-all flex items-center gap-2 hover:scale-105 active:scale-95">
+                <span>Confirmar</span>
+                <i class="fab fa-whatsapp text-sm"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[92vh] flex items-center justify-center px-4 py-16 overflow-hidden bg-gradient-to-b from-wedding-sand via-wedding-cream to-wedding-cream">
+        <!-- Subtle botanical decorative glows -->
+        <div class="absolute -top-20 -left-20 w-80 h-80 bg-wedding-softRose/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-wedding-softSage/40 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-wedding-olive/10 text-wedding-olive text-xs tracking-widest uppercase font-bold">
+                <i class="fas fa-heart text-wedding-terracotta text-xs"></i>
+                ¡Ahora toca festejar!
+            </div>
+            
+            <!-- Hero Couple Featured Photo Frame -->
+            <div class="w-44 h-44 sm:w-56 sm:h-56 mx-auto rounded-full p-2 bg-gradient-to-tr from-wedding-terracotta via-wedding-gold to-wedding-sage shadow-2xl animate-float overflow-hidden">
+                <img src="WhatsApp Image 2026-09-10 at 18.57.59.jpeg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80';" alt="Renata y Roany" class="w-full h-full object-cover rounded-full border-4 border-wedding-cream shadow-inner">
+            </div>
+
+            <h1 class="font-script text-6xl sm:text-8xl md:text-9xl text-wedding-terracotta drop-shadow-sm leading-tight py-2">
+                Renata & Roany
+            </h1>
+
+            <p class="font-serif italic text-lg sm:text-2xl text-wedding-olive max-w-2xl mx-auto leading-relaxed">
+                "Hay momentos en la vida que son inolvidables, pero compartirlos con quienes más queremos los vuelve eternos."
+            </p>
+
+            <div class="flex items-center justify-center gap-4 text-wedding-gold py-1">
+                <span class="h-[1px] w-12 md:w-20 bg-wedding-gold/50"></span>
+                <i class="fas fa-ring text-wedding-terracotta"></i>
+                <span class="h-[1px] w-12 md:w-20 bg-wedding-gold/50"></span>
+            </div>
+
+            <div class="text-xl sm:text-2xl md:text-3xl font-serif font-bold tracking-wide text-wedding-charcoal uppercase">
+                14 DE NOVIEMBRE • 21:00 HS
+            </div>
+            <p class="text-xs md:text-sm font-semibold text-wedding-sage uppercase tracking-widest">
+                <i class="fas fa-map-marker-alt text-wedding-terracotta mr-1"></i> Boomerang Campestre • Rivera, Uruguay
+            </p>
+
+            <!-- Countdown Timer Card -->
+            <div class="pt-6">
+                <div class="glass-card max-w-2xl mx-auto p-6 md:p-8 rounded-3xl shadow-xl border border-wedding-sage/30">
+                    <h3 class="text-xs uppercase tracking-widest text-wedding-terracotta font-bold mb-6">Cuenta Regresiva para el Gran Día</h3>
+                    <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center" id="countdown">
+                        <div class="p-3 sm:p-4 bg-wedding-cream rounded-2xl shadow-sm border border-wedding-softRose/50">
+                            <span id="days" class="block text-2xl sm:text-4xl font-bold font-serif text-wedding-olive">00</span>
+                            <span class="text-[10px] sm:text-xs text-wedding-charcoal/70 uppercase font-medium">Días</span>
+                        </div>
+                        <div class="p-3 sm:p-4 bg-wedding-cream rounded-2xl shadow-sm border border-wedding-softRose/50">
+                            <span id="hours" class="block text-2xl sm:text-4xl font-bold font-serif text-wedding-olive">00</span>
+                            <span class="text-[10px] sm:text-xs text-wedding-charcoal/70 uppercase font-medium">Horas</span>
+                        </div>
+                        <div class="p-3 sm:p-4 bg-wedding-cream rounded-2xl shadow-sm border border-wedding-softRose/50">
+                            <span id="minutes" class="block text-2xl sm:text-4xl font-bold font-serif text-wedding-olive">00</span>
+                            <span class="text-[10px] sm:text-xs text-wedding-charcoal/70 uppercase font-medium">Minutos</span>
+                        </div>
+                        <div class="p-3 sm:p-4 bg-wedding-cream rounded-2xl shadow-sm border border-wedding-softRose/50">
+                            <span id="seconds" class="block text-2xl sm:text-4xl font-bold font-serif text-wedding-olive">00</span>
+                            <span class="text-[10px] sm:text-xs text-wedding-charcoal/70 uppercase font-medium">Segundos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery / Memory Section -->
+    <section id="recuerdos" class="py-20 px-4 bg-wedding-cream">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-wedding-terracotta block mb-2">Nuestra Historia en Fotos</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-wedding-charcoal">Recuerdos Inolvidables</h2>
+                <div class="w-16 h-0.5 bg-wedding-terracotta mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Gallery Grid with attached photos -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Photo 1: Civil Marriage -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg aspect-[3/4] bg-wedding-sand cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl" onclick="openLightbox('WhatsApp Image 2026-09-10 at 18.57.59.jpeg', 'Nuestro Matrimonio Civil')">
+                    <img src="WhatsApp Image 2026-09-10 at 18.57.59.jpeg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80';" alt="Renata y Roany Matrimonio Civil" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wedding-charcoal/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <span class="text-xs font-medium text-wedding-softRose uppercase tracking-wider block mb-1">Registro Civil</span>
+                        <h3 class="font-serif text-xl font-semibold">El Sí Legal</h3>
+                    </div>
+                </div>
+
+               
+
+                <!-- Photo 3: Walking through garden entrance -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg aspect-[3/4] bg-wedding-sand cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl" onclick="openLightbox('WhatsApp Image 2026-09-10 at 18.57.58.jpeg', 'Caminando Juntos')">
+                    <img src="WhatsApp Image 2026-09-10 at 18.57.58.jpeg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1000&q=80';" alt="Paseo por el jardín" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wedding-charcoal/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <span class="text-xs font-medium text-wedding-softRose uppercase tracking-wider block mb-1">Hacia el Futuro</span>
+                        <h3 class="font-serif text-xl font-semibold">Juntos en el Camino</h3>
+                    </div>
+                </div>
+
+                <!-- Photo 4: Eiffel Tower Trip -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg aspect-[3/4] bg-wedding-sand cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl" onclick="openLightbox('WhatsApp Image 2026-09-11 at 10.04.01.jpeg', 'París - Torre Eiffel')">
+                    <img src="WhatsApp Image 2026-09-11 at 10.04.01.jpeg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1000&q=80';" alt="Viaje a París" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wedding-charcoal/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <span class="text-xs font-medium text-wedding-softRose uppercase tracking-wider block mb-1">Viajes & Aventuras</span>
+                        <h3 class="font-serif text-xl font-semibold">París con Amor</h3>
+                    </div>
+                </div>
+
+                <!-- Photo 5: Beach Proposal -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg aspect-[3/4] bg-wedding-sand cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl" onclick="openLightbox('WhatsApp Image 2026-09-11 at 10.04.02 (1).jpg', 'Propuesta en la Playa')">
+                    <img src="WhatsApp Image 2026-09-11 at 10.04.02 (1).jpeg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1000&q=80';" alt="Propuesta de matrimonio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wedding-charcoal/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <span class="text-xs font-medium text-wedding-softRose uppercase tracking-wider block mb-1">El Gran Momento</span>
+                        <h3 class="font-serif text-xl font-semibold">La Propuesta de Matrimonio</h3>
+                    </div>
+                </div>
+
+                <!-- Photo 6: Formal Gala Evening -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg aspect-[3/4] bg-wedding-sand cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl" onclick="openLightbox('WhatsApp Image 2026-09-11 at 10.04.02 (2).jpeg', 'Noche de Gala')">
+                    <img src="WhatsApp Image 2026-09-11 at 10.04.02 (2).jpeg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80';" alt="Noche de Gala Renata y Roany" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wedding-charcoal/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <span class="text-xs font-medium text-wedding-softRose uppercase tracking-wider block mb-1">Celebración</span>
+                        <h3 class="font-serif text-xl font-semibold">Noche Especial</h3>
+                    </div>
+                </div>
+
+                
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Section -->
+    <section id="detalles" class="py-20 px-4 bg-wedding-sand/60 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-wedding-terracotta block mb-2">Cuándo & Dónde</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-wedding-charcoal">Detalles de la Celebración</h2>
+                <div class="w-16 h-0.5 bg-wedding-terracotta mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                <!-- Date & Time Card -->
+                <div class="glass-card p-8 rounded-3xl shadow-lg border border-wedding-sage/30 flex flex-col justify-between text-center group hover:border-wedding-terracotta/50 transition-colors">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-wedding-softRose/50 text-wedding-terracotta flex items-center justify-center mx-auto mb-6 text-2xl group-hover:scale-110 transition-transform">
+                            <i class="far fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-wedding-charcoal mb-2">Fecha & Hora</h3>
+                        <p class="text-wedding-olive font-semibold text-lg mb-1">Sábado, 14 de Noviembre</p>
+                        <p class="text-wedding-charcoal/80 text-sm font-medium mb-6">Recepción a las <span class="font-bold text-wedding-terracotta">21:00 HS</span></p>
+                    </div>
+                    <div class="pt-4 border-t border-wedding-sage/20">
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Renata+%26+Roany&dates=20261114T210000/20261115T040000&details=Celebremos+juntos+el+matrimonio+de+Renata+y+Roany+en+Boomerang+Campestre!&location=Boomerang+Campestre,+Rivera,+Uruguay" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-wedding-olive hover:text-wedding-terracotta transition-colors">
+                            <i class="far fa-bell"></i> Agendar en Google Calendar
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Location Card -->
+                <div class="glass-card p-8 rounded-3xl shadow-lg border border-wedding-sage/30 flex flex-col justify-between text-center group hover:border-wedding-terracotta/50 transition-colors">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-wedding-softSage/50 text-wedding-olive flex items-center justify-center mx-auto mb-6 text-2xl group-hover:scale-110 transition-transform">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-wedding-charcoal mb-2">El Lugar</h3>
+                        <p class="text-wedding-olive font-semibold text-lg mb-1">Boomerang Campestre</p>
+                        <p class="text-wedding-charcoal/80 text-sm font-medium mb-6">Rivera, Uruguay</p>
+                    </div>
+                    <div class="pt-4 border-t border-wedding-sage/20">
+                        <a href="https://maps.google.com/?q=Boomerang+Campestre+Rivera+Uruguay" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-wedding-olive hover:bg-wedding-olive/90 text-white text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-full transition-all shadow-md hover:scale-105 active:scale-95">
+                            <i class="fas fa-directions"></i> Cómo Llegar (Google Maps)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dress Code Section -->
+    <section id="vestimenta" class="py-20 px-4 bg-wedding-cream">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card p-8 md:p-12 rounded-3xl shadow-xl border border-wedding-sage/30 text-center relative overflow-hidden">
+                <div class="max-w-2xl mx-auto space-y-6">
+                    <span class="text-xs font-bold uppercase tracking-widest text-wedding-terracotta block">Código de Vestimenta</span>
+                    <h2 class="font-serif text-4xl font-bold text-wedding-charcoal">Vestimenta Semi Formal</h2>
+                    
+                    <div class="w-14 h-14 rounded-full bg-wedding-softRose/40 text-wedding-terracotta flex items-center justify-center mx-auto text-2xl">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+
+                    <p class="text-wedding-charcoal/80 text-sm sm:text-base leading-relaxed">
+                        Queremos que disfrutes y estés cómodo celebrando junto a nosotros en Boomerang Campestre. Recomendamos atuendo <strong class="text-wedding-olive">Semi Formal / Elegante Campo</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bank Gift Registry Section -->
+    <section id="regalos" class="py-20 px-4 bg-wedding-sand/40">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-wedding-terracotta block mb-2">Mesa de Regalos</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-wedding-charcoal">Cuentas para Regalos</h2>
+                <div class="w-16 h-0.5 bg-wedding-terracotta mx-auto mt-4 rounded-full"></div>
+                <p class="text-xs sm:text-sm text-wedding-charcoal/70 mt-4 leading-relaxed">
+                    Tu presencia es nuestro mejor regalo. Si deseas realizarnos un presente para dar inicio a esta nueva etapa, te dejamos las opciones de depósito bancario:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- BROU Card -->
+                <div class="glass-card p-8 rounded-3xl shadow-xl border border-wedding-sage/30 relative flex flex-col justify-between hover:shadow-2xl transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="px-3 py-1 rounded-full bg-blue-100 text-blue-900 text-xs font-bold tracking-wider uppercase">
+                                Banco BROU
+                            </div>
+                            <i class="fas fa-university text-wedding-terracotta text-2xl"></i>
+                        </div>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div>
+                                <span class="text-[11px] font-semibold text-wedding-sage uppercase tracking-wider block">Tipo de Cuenta</span>
+                                <p class="text-base font-bold text-wedding-charcoal">Caja de Ahorro</p>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-semibold text-wedding-sage uppercase tracking-wider block">Número de Cuenta</span>
+                                <p class="text-xl font-mono font-bold text-wedding-olive tracking-wide">110888794 - 00001</p>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-semibold text-wedding-sage uppercase tracking-wider block">Titular</span>
+                                <p class="text-sm font-semibold text-wedding-charcoal">Giovana dos Santos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="copyToClipboard('110888794 - 00001', 'BROU')" class="w-full bg-wedding-olive hover:bg-wedding-olive/90 text-white text-xs font-bold uppercase tracking-wider py-3.5 px-4 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 active:scale-95">
+                        <i class="far fa-copy"></i>
+                        <span>Copiar Cuenta BROU</span>
+                    </button>
+                </div>
+
+                <!-- Scotia Card -->
+                <div class="glass-card p-8 rounded-3xl shadow-xl border border-wedding-sage/30 relative flex flex-col justify-between hover:shadow-2xl transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="px-3 py-1 rounded-full bg-red-100 text-red-900 text-xs font-bold tracking-wider uppercase">
+                                Scotiabank
+                            </div>
+                            <i class="fas fa-credit-card text-wedding-terracotta text-2xl"></i>
+                        </div>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div>
+                                <span class="text-[11px] font-semibold text-wedding-sage uppercase tracking-wider block">Tipo de Cuenta</span>
+                                <p class="text-base font-bold text-wedding-charcoal">Caja de Ahorro</p>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-semibold text-wedding-sage uppercase tracking-wider block">Número de Cuenta</span>
+                                <p class="text-xl font-mono font-bold text-wedding-olive tracking-wide">2536707300</p>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-semibold text-wedding-sage uppercase tracking-wider block">Titular</span>
+                                <p class="text-sm font-semibold text-wedding-charcoal">Roany Salmanton</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="copyToClipboard('2536707300', 'Scotia')" class="w-full bg-wedding-terracotta hover:bg-wedding-terracotta/90 text-white text-xs font-bold uppercase tracking-wider py-3.5 px-4 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 active:scale-95">
+                        <i class="far fa-copy"></i>
+                        <span>Copiar Cuenta Scotia</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Suggestions Section -->
+    <section id="musica" class="py-20 px-4 bg-wedding-cream">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card p-8 sm:p-12 rounded-3xl shadow-xl border border-wedding-sage/30 text-center">
+                <div class="max-w-2xl mx-auto space-y-6">
+                    <div class="w-16 h-16 rounded-2xl bg-wedding-softRose/50 text-wedding-terracotta flex items-center justify-center mx-auto text-2xl">
+                        <i class="fas fa-compact-disc animate-spin" style="animation-duration: 8s;"></i>
+                    </div>
+
+                    <span class="text-xs font-bold uppercase tracking-widest text-wedding-terracotta block">¿Qué canción no puede faltar?</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-wedding-charcoal">¡Armemos la Pista de Baile!</h2>
+                    
+                    <p class="text-xs sm:text-sm text-wedding-charcoal/80">
+                        Queremos que no pares de bailar toda la noche. Ingresa tu canción y artista favoritos para sumarlo a la lista del DJ.
+                    </p>
+
+                    <form id="songForm" onsubmit="submitSongRequest(event)" class="space-y-4 pt-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input type="text" id="songTitle" required placeholder="Nombre de la Canción" class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-wedding-sage/30 focus:outline-none focus:ring-2 focus:ring-wedding-terracotta text-sm">
+                            <input type="text" id="songArtist" required placeholder="Artista / Banda" class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-wedding-sage/30 focus:outline-none focus:ring-2 focus:ring-wedding-terracotta text-sm">
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto px-8 py-3.5 bg-wedding-olive hover:bg-wedding-olive/90 text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md transition-all active:scale-95">
+                            <i class="fas fa-plus-circle mr-2"></i> Sugerir Canción por WhatsApp
+                        </button>
+                    </form>
+
+                    <!-- Song Suggestions Wishlist -->
+                    <div id="songListContainer" class="pt-6 hidden">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-wedding-sage mb-3">Canciones Sugeridas Recientemente:</h4>
+                        <div id="songList" class="flex flex-wrap justify-center gap-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section with direct WhatsApp link to +598 98 387 197 -->
+    <section id="rsvp" class="py-20 px-4 bg-wedding-sand/80 relative">
+        <div class="max-w-3xl mx-auto">
+            <div class="glass-card p-8 sm:p-12 rounded-3xl shadow-2xl border border-wedding-terracotta/30">
+                <div class="text-center mb-8">
+                    <span class="text-xs font-bold uppercase tracking-widest text-wedding-terracotta block mb-2">Confirmación de Asistencia</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-wedding-charcoal">RSVP</h2>
+                    <div class="w-16 h-0.5 bg-wedding-terracotta mx-auto mt-4 rounded-full"></div>
+                    <p class="text-xs sm:text-sm text-wedding-charcoal/70 mt-3">
+                        Por favor confirma tu presencia. Al completar el formulario se abrirá tu WhatsApp para enviar el mensaje directamente a Renata y Roany.
+                    </p>
+                </div>
+
+                <form id="rsvpForm" onsubmit="sendRSVP(event)" class="space-y-6">
+                    <div>
+                        <label for="guestName" class="block text-xs font-bold uppercase tracking-wider text-wedding-olive mb-2">Nombre y Apellido Completo *</label>
+                        <input type="text" id="guestName" required placeholder="Ej. María García" class="w-full px-4 py-3.5 rounded-2xl bg-white/90 border border-wedding-sage/30 focus:outline-none focus:ring-2 focus:ring-wedding-terracotta text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-wedding-olive mb-2">¿Asistirás a la boda? *</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="cursor-pointer border border-wedding-sage/30 rounded-2xl p-4 flex items-center justify-center gap-2 bg-white/70 hover:bg-wedding-softRose/20 transition-all font-semibold text-sm">
+                                <input type="radio" name="attendance" value="Sí, asistiré con mucho gusto" checked class="accent-wedding-terracotta">
+                                <span><i class="fas fa-check-circle text-wedding-olive mr-1"></i> Sí, Asistiré</span>
+                            </label>
+                            <label class="cursor-pointer border border-wedding-sage/30 rounded-2xl p-4 flex items-center justify-center gap-2 bg-white/70 hover:bg-wedding-softRose/20 transition-all font-semibold text-sm">
+                                <input type="radio" name="attendance" value="No podré asistir, les envío un fuerte abrazo" class="accent-wedding-terracotta">
+                                <span><i class="fas fa-times-circle text-wedding-terracotta mr-1"></i> No Podré Ir</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="companionCount" class="block text-xs font-bold uppercase tracking-wider text-wedding-olive mb-2">Acompañantes</label>
+                            <select id="companionCount" class="w-full px-4 py-3.5 rounded-2xl bg-white/90 border border-wedding-sage/30 focus:outline-none focus:ring-2 focus:ring-wedding-terracotta text-sm font-medium">
+                                <option value="Solo yo">Voy solo/a</option>
+                                <option value="1 Acompañante">1 Acompañante</option>
+                                <option value="2 Acompañantes">2 Acompañantes</option>
+                                <option value="Familia (3+)">Familia (3 o más)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="dietary" class="block text-xs font-bold uppercase tracking-wider text-wedding-olive mb-2">Restricción Alimentaria</label>
+                            <input type="text" id="dietary" placeholder="Vegetariano, Celíaco, Ninguna..." class="w-full px-4 py-3.5 rounded-2xl bg-white/90 border border-wedding-sage/30 focus:outline-none focus:ring-2 focus:ring-wedding-terracotta text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="note" class="block text-xs font-bold uppercase tracking-wider text-wedding-olive mb-2">Mensaje o Felicitaciones para los Novios</label>
+                        <textarea id="note" rows="3" placeholder="Escribe tus buenos deseos aquí..." class="w-full px-4 py-3.5 rounded-2xl bg-white/90 border border-wedding-sage/30 focus:outline-none focus:ring-2 focus:ring-wedding-terracotta text-sm"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm uppercase tracking-wider py-4 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        <span>Enviar Confirmación por WhatsApp</span>
+                    </button>
+                    
+                    <p class="text-[11px] text-center text-wedding-charcoal/60">
+                        Destinatario: <strong>+598 98 387 197</strong>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memory Wishboard / Guestbook -->
+    <section class="py-20 px-4 bg-wedding-cream border-t border-wedding-sage/20">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-xs font-bold uppercase tracking-widest text-wedding-terracotta block mb-2">Recuerdos para Siempre</span>
+            <h2 class="font-serif text-4xl font-bold text-wedding-charcoal mb-4">Muro de Felicitaciones</h2>
+            <p class="text-xs sm:text-sm text-wedding-charcoal/70 mb-8 max-w-lg mx-auto">
+                Deja tu mensaje especial para Renata y Roany para guardarlo como recuerdo de este gran día.
+            </p>
+
+            <div id="wishesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-8">
+                <!-- Wishes will render dynamically -->
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl max-w-xl mx-auto border border-wedding-sage/30">
+                <div class="flex gap-2">
+                    <input type="text" id="wishInput" placeholder="Escribe una breve felicitación..." class="flex-1 px-4 py-3 rounded-2xl bg-white border border-wedding-sage/30 text-sm focus:outline-none focus:ring-2 focus:ring-wedding-terracotta">
+                    <button onclick="addWish()" class="px-6 py-3 bg-wedding-terracotta text-white rounded-2xl font-bold text-xs uppercase tracking-wider hover:bg-wedding-terracotta/90 transition-all">
+                        <i class="fas fa-heart mr-1"></i> Publicar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/90 hidden items-center justify-center p-4 backdrop-blur-md transition-opacity" onclick="closeLightbox()">
+        <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-white text-3xl hover:text-wedding-softRose transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="lightboxImg" src="" alt="Enlarged Memory Photo" class="max-h-[80vh] w-auto rounded-2xl shadow-2xl object-contain border border-white/20">
+            <p id="lightboxCaption" class="text-white text-center font-serif text-xl mt-4 font-semibold"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-wedding-charcoal text-wedding-cream text-center px-4">
+        <div class="max-w-2xl mx-auto space-y-4">
+            <h3 class="font-script text-4xl text-wedding-softRose">Renata & Roany</h3>
+            <p class="text-xs uppercase tracking-widest text-wedding-softSage">14 de Noviembre • Boomerang Campestre • Rivera, Uruguay</p>
+            <div class="flex items-center justify-center gap-2 text-wedding-gold pt-2">
+                <span class="h-[1px] w-8 bg-wedding-gold/40"></span>
+                <i class="fas fa-heart text-wedding-terracotta text-xs"></i>
+                <span class="h-[1px] w-8 bg-wedding-gold/40"></span>
+            </div>
+            <p class="text-[11px] text-stone-400 font-light">
+                Diseñado para conservar nuestros mejores recuerdos. ¡Gracias por formar parte de nuestras vidas!
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Target Date: November 14, 2026 at 21:00 HS
+        const weddingDate = new Date('November 14, 2026 21:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = `
+                    <div class="col-span-4 p-4 bg-wedding-olive text-white rounded-2xl font-serif text-2xl font-bold">
+                        ¡Llegó el día tan esperado! 🎉
+                    </div>
+                `;
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Background Audio Controller
+        let isAudioPlaying = false;
+        function toggleAudio() {
+            const audio = document.getElementById('weddingAudio');
+            const icon = document.getElementById('audioIcon');
+            const status = document.getElementById('audioStatusText');
+
+            if (isAudioPlaying) {
+                audio.pause();
+                icon.className = 'fas fa-music text-wedding-terracotta';
+                status.innerText = 'Música';
+                isAudioPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    icon.className = 'fas fa-pause text-wedding-olive';
+                    status.innerText = 'Pausar';
+                    isAudioPlaying = true;
+                    showToast('Reproduciendo música de ambiente 🎵', 'Info');
+                }).catch(err => {
+                    showToast('Haz clic de nuevo para habilitar reproducción', 'Audio');
+                });
+            }
+        }
+
+        // Copy Bank Details to Clipboard
+        function copyToClipboard(text, bankName) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+            showToast(`Cuenta de ${bankName} (${text}) copiada al portapapeles.`, '¡Copiado!');
+        }
+
+        // Toast Notification System
+        function showToast(message, title = 'Notificación') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        // Send RSVP via WhatsApp to +598 98 387 197
+        function sendRSVP(event) {
+            event.preventDefault();
+            const name = document.getElementById('guestName').value.trim();
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const companions = document.getElementById('companionCount').value;
+            const dietary = document.getElementById('dietary').value.trim();
+            const note = document.getElementById('note').value.trim();
+
+            const targetPhone = '59898387197'; // WhatsApp number provided
+
+            let message = `*CONFIRMACIÓN RSVP - BODA RENATA %26 ROANY*%0A%0A`;
+            message += `👤 *Nombre:* ${encodeURIComponent(name)}%0A`;
+            message += `💌 *Asistencia:* ${encodeURIComponent(attendance)}%0A`;
+            message += `👥 *Acompañantes:* ${encodeURIComponent(companions)}%0A`;
+            if (dietary) message += `🍽️ *Restricción alimentaria:* ${encodeURIComponent(dietary)}%0A`;
+            if (note) message += `📝 *Mensaje:* ${encodeURIComponent(note)}%0A`;
+
+            const whatsappUrl = `https://wa.me/${targetPhone}?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+
+            showToast('Redirigiendo a WhatsApp para enviar confirmación...', 'RSVP enviado');
+        }
+
+        // Song Suggestion Form handler
+        const suggestedSongs = [];
+        function submitSongRequest(event) {
+            event.preventDefault();
+            const title = document.getElementById('songTitle').value.trim();
+            const artist = document.getElementById('songArtist').value.trim();
+
+            if (!title || !artist) return;
+
+            suggestedSongs.push(`${title} - ${artist}`);
+            renderSongList();
+
+            const targetPhone = '59898387197';
+            const songMsg = `🎵 *Sugerencia de Canción para la Boda* 🎵%0A%0A*Canción:* ${encodeURIComponent(title)}%0A*Artista:* ${encodeURIComponent(artist)}`;
+            
+            document.getElementById('songTitle').value = '';
+            document.getElementById('songArtist').value = '';
+
+            window.open(`https://wa.me/${targetPhone}?text=${songMsg}`, '_blank');
+            showToast('¡Gracias! Tu canción fue enviada por WhatsApp.', 'Música');
+        }
+
+        function renderSongList() {
+            const container = document.getElementById('songListContainer');
+            const list = document.getElementById('songList');
+            container.classList.remove('hidden');
+            list.innerHTML = '';
+
+            suggestedSongs.forEach(song => {
+                const tag = document.createElement('span');
+                tag.className = 'px-3 py-1.5 rounded-full bg-wedding-softRose/50 text-wedding-charcoal text-xs font-semibold border border-wedding-terracotta/20 flex items-center gap-1.5';
+                tag.innerHTML = `<i class="fas fa-music text-wedding-terracotta text-[10px]"></i> ${song}`;
+                list.appendChild(tag);
+            });
+        }
+
+        // Lightbox Functions
+        function openLightbox(imgSrc, caption) {
+            const lightbox = document.getElementById('lightbox');
+            document.getElementById('lightboxImg').src = imgSrc;
+            document.getElementById('lightboxCaption').innerText = caption;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('flex');
+            lightbox.classList.add('hidden');
+        }
+
+        // Interactive Wishboard logic (Local Memory)
+        const initialWishes = [
+            { name: "Familia Salmanton", text: "¡Que el amor y la alegría reine siempre en su hogar! Los queremos mucho." },
+            { name: "Giovana & Amigos", text: "Estamos contando los días para celebrar esta gran fiesta con ustedes." }
+        ];
+
+        function renderWishes() {
+            const wishesContainer = document.getElementById('wishesContainer');
+            wishesContainer.innerHTML = '';
+            
+            const wishes = JSON.parse(localStorage.getItem('weddingWishes')) || initialWishes;
+            
+            wishes.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-5 rounded-2xl border border-wedding-sage/30 shadow-sm relative';
+                card.innerHTML = `
+                    <p class="text-xs italic text-wedding-charcoal/90 mb-3">"${item.text}"</p>
+                    <span class="text-[11px] font-bold text-wedding-terracotta uppercase tracking-wider block">— ${item.name}</span>
+                `;
+                wishesContainer.appendChild(card);
+            });
+        }
+
+        function addWish() {
+            const wishInput = document.getElementById('wishInput');
+            const text = wishInput.value.trim();
+            if (!text) return;
+
+            const wishes = JSON.parse(localStorage.getItem('weddingWishes')) || initialWishes;
+            wishes.unshift({ name: "Invitado Especial", text: text });
+            localStorage.setItem('weddingWishes', JSON.stringify(wishes));
+
+            wishInput.value = '';
+            renderWishes();
+            showToast('¡Tu mensaje de felicidades ha sido publicado en el muro!', 'Muro de Recuerdos');
+        }
+
+        // Initialize wishboard on load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWishes();
+        });
+    </script>
+</body>
+</html>
